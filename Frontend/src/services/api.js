@@ -1,4 +1,4 @@
-const API_URL = "http://localhost:2000/api/auth";
+const API_URL = import.meta.env.VITE_API_URL;
 
 export async function loginUser(email, password) {
   const response = await fetch(`${API_URL}/login`, {
@@ -20,10 +20,11 @@ export async function loginUser(email, password) {
 
   return data;
 }
+
 export async function getDashboard() {
   const token = localStorage.getItem("token");
 
-  const response = await fetch("http://localhost:2000/api/auth/dashboard", {
+  const response = await fetch(`${API_URL}/dashboard`, {
     method: "GET",
     headers: {
       Authorization: `Bearer ${token}`,
@@ -38,11 +39,12 @@ export async function getDashboard() {
 
   return data;
 }
+
 export async function customerAI(question) {
   const token = localStorage.getItem("customerToken");
 
   const response = await fetch(
-    "http://localhost:2000/api/auth/customer/ask_question",
+    `${API_URL}/customer/ask_question`,
     {
       method: "POST",
       headers: {
@@ -63,6 +65,7 @@ export async function customerAI(question) {
 
   return data;
 }
+
 export async function getMyOrders() {
   const token = localStorage.getItem("customerToken");
 
@@ -82,7 +85,6 @@ export async function getMyOrders() {
   return data;
 }
 
-
 export async function getAllOrders() {
   const token = localStorage.getItem("token");
 
@@ -101,7 +103,6 @@ export async function getAllOrders() {
 
   return data;
 }
-
 
 export async function updateOrderStatus(orderId) {
   const token = localStorage.getItem("token");
@@ -168,6 +169,7 @@ export async function createMenu(menuData) {
 
   return data;
 }
+
 export async function updateMenu(menuId, menuData) {
   const token = localStorage.getItem("token");
 
@@ -207,7 +209,9 @@ export async function deleteMenu(menuId) {
 
   return data;
 }
-//table ----
+
+// TABLES
+
 export async function getAllTables() {
   const token = localStorage.getItem("token");
 
@@ -226,7 +230,6 @@ export async function getAllTables() {
 
   return data;
 }
-
 
 export async function createTable(tableData) {
   const token = localStorage.getItem("token");
@@ -248,7 +251,6 @@ export async function createTable(tableData) {
 
   return data;
 }
-
 
 export async function updateTable(tableId, tableData) {
   const token = localStorage.getItem("token");
@@ -274,7 +276,6 @@ export async function updateTable(tableId, tableData) {
   return data;
 }
 
-
 export async function deleteTable(tableId) {
   const token = localStorage.getItem("token");
 
@@ -296,6 +297,9 @@ export async function deleteTable(tableId) {
 
   return data;
 }
+
+// PAYMENTS
+
 export async function getAllPayments() {
   const token = localStorage.getItem("token");
 
@@ -314,7 +318,6 @@ export async function getAllPayments() {
 
   return data;
 }
-
 
 export async function approvePayment(paymentId) {
   const token = localStorage.getItem("token");
@@ -337,6 +340,8 @@ export async function approvePayment(paymentId) {
 
   return data;
 }
+
+// CUSTOMERS
 
 export async function getAllCustomers() {
   const token = localStorage.getItem("token");
@@ -380,4 +385,3 @@ export async function createCustomer(customerData) {
 
   return data;
 }
-
