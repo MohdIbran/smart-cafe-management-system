@@ -1,0 +1,12 @@
+require("dotenv").config();
+const { GoogleGenAI } = require("@google/genai");
+const ai = new GoogleGenAI({ apiKey: process.env.AI_KEY });
+async function generateAIResponse(prompt) {
+const response = await ai.models.generateContent({
+    model: "gemini-3.8-flash",
+    contents: prompt,
+  });
+  return(response.text);
+    
+}
+module.exports = generateAIResponse;

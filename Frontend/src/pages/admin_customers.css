@@ -1,0 +1,335 @@
+/* ================================
+   ADMIN CUSTOMERS PAGE
+================================ */
+
+.admin-customers-page {
+  min-height: 100vh;
+  width: 100%;
+  padding: 32px;
+  box-sizing: border-box;
+  background: #f7f5f2;
+  color: #2f2925;
+  font-family: Arial, Helvetica, sans-serif;
+}
+
+
+/* ================================
+   HEADER
+================================ */
+
+.customers-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 20px;
+  margin-bottom: 28px;
+}
+
+.customers-header h1 {
+  margin: 0;
+  font-size: 30px;
+  font-weight: 700;
+  color: #3b2720;
+}
+
+.customers-header p {
+  margin: 7px 0 0;
+  font-size: 14px;
+  color: #8a817b;
+}
+
+.customers-count {
+  padding: 11px 17px;
+  background: #ffffff;
+  border: 1px solid #e7e0da;
+  border-radius: 10px;
+  color: #5a463b;
+  font-size: 14px;
+  font-weight: 600;
+  white-space: nowrap;
+  box-shadow: 0 3px 12px rgba(45, 41, 38, 0.05);
+}
+
+
+/* ================================
+   MAIN CARD
+================================ */
+
+.customers-card {
+  width: 100%;
+  background: #ffffff;
+  border: 1px solid #e8e1db;
+  border-radius: 16px;
+  overflow: hidden;
+  box-shadow: 0 6px 22px rgba(45, 41, 38, 0.06);
+}
+
+
+/* ================================
+   TABLE WRAPPER
+================================ */
+
+.customers-table-wrapper {
+  width: 100%;
+  overflow-x: auto;
+}
+
+
+/* ================================
+   TABLE
+================================ */
+
+.customers-table {
+  width: 100%;
+  min-width: 1100px;
+  border-collapse: collapse;
+}
+
+
+/* TABLE HEADER */
+
+.customers-table thead {
+  background: #f5f1ed;
+}
+
+.customers-table th {
+  padding: 16px 20px;
+  text-align: left;
+
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.6px;
+  text-transform: uppercase;
+
+  color: #756b64;
+
+  border-bottom: 1px solid #e6dfd9;
+  white-space: nowrap;
+}
+
+
+/* TABLE BODY */
+
+.customers-table td {
+  padding: 17px 20px;
+
+  font-size: 14px;
+  color: #625a54;
+
+  border-bottom: 1px solid #eee9e4;
+  vertical-align: middle;
+}
+
+.customers-table tbody tr {
+  transition: background 0.2s ease;
+}
+
+.customers-table tbody tr:hover {
+  background: #faf8f6;
+}
+
+.customers-table tbody tr:last-child td {
+  border-bottom: none;
+}
+
+
+/* ================================
+   CUSTOMER NAME
+================================ */
+
+.customer-name {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  min-width: 190px;
+}
+
+.customer-avatar {
+  width: 42px;
+  height: 42px;
+
+  flex-shrink: 0;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  border-radius: 50%;
+
+  background: #3b2720;
+  color: #ffffff;
+
+  font-size: 15px;
+  font-weight: 700;
+}
+
+.customer-name strong {
+  color: #302924;
+  font-size: 14px;
+  font-weight: 600;
+}
+
+
+/* ================================
+   CUSTOMER INFO
+================================ */
+
+.customer-info {
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+}
+
+.customer-info span {
+  font-size: 11px;
+  color: #9a918b;
+}
+
+
+/* ================================
+   TABLE BADGE
+================================ */
+
+.table-badge {
+  display: inline-flex;
+  align-items: center;
+
+  padding: 7px 10px;
+
+  border-radius: 7px;
+
+  background: #f3eee9;
+  color: #684b3d;
+
+  font-size: 12px;
+  font-weight: 600;
+
+  white-space: nowrap;
+}
+
+.no-table {
+  color: #9a918b;
+  font-size: 12px;
+}
+
+
+/* ================================
+   ORDERS BADGE
+================================ */
+
+.orders-badge {
+  display: inline-flex;
+  align-items: center;
+
+  padding: 7px 10px;
+
+  border-radius: 7px;
+
+  background: #f1f5f9;
+  color: #475569;
+
+  font-size: 12px;
+  font-weight: 600;
+
+  white-space: nowrap;
+}
+
+
+/* ================================
+   TOTAL SPENT
+================================ */
+
+.customer-spent {
+  color: #287a4d;
+  font-size: 14px;
+  font-weight: 700;
+  white-space: nowrap;
+}
+
+
+/* ================================
+   EMPTY CUSTOMER STATE
+================================ */
+
+.no-customers {
+  padding: 90px 20px;
+  text-align: center;
+}
+
+.no-customers > div {
+  margin-bottom: 15px;
+  font-size: 52px;
+}
+
+.no-customers h2 {
+  margin: 0 0 8px;
+  color: #3b2720;
+  font-size: 22px;
+}
+
+.no-customers p {
+  margin: 0;
+  color: #8a817b;
+  font-size: 14px;
+}
+
+
+/* ================================
+   LOADING
+================================ */
+
+.customers-loading {
+  min-height: 100vh;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  background: #f7f5f2;
+}
+
+.customers-loading h2 {
+  color: #3b2720;
+  font-size: 22px;
+}
+
+
+/* ================================
+   RESPONSIVE
+================================ */
+
+@media (max-width: 900px) {
+
+  .admin-customers-page {
+    padding: 25px 20px;
+  }
+
+  .customers-header h1 {
+    font-size: 27px;
+  }
+
+  .customers-table {
+    min-width: 1050px;
+  }
+}
+
+
+@media (max-width: 600px) {
+
+  .admin-customers-page {
+    padding: 20px 15px;
+  }
+
+  .customers-header {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .customers-header h1 {
+    font-size: 25px;
+  }
+
+  .customers-count {
+    padding: 10px 14px;
+  }
+}

@@ -1,0 +1,560 @@
+/* ================================
+   ADMIN REPORTS PAGE
+================================ */
+
+.admin-reports-page {
+  min-height: 100vh;
+  width: 100%;
+  padding: 32px;
+  box-sizing: border-box;
+  background: #f7f5f2;
+  color: #2f2925;
+  font-family: Arial, Helvetica, sans-serif;
+}
+
+
+/* ================================
+   HEADER
+================================ */
+
+.reports-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 20px;
+  margin-bottom: 28px;
+}
+
+.reports-header h1 {
+  margin: 0;
+  color: #3b2720;
+  font-size: 30px;
+  font-weight: 700;
+  letter-spacing: -0.4px;
+}
+
+.reports-header p {
+  margin: 7px 0 0;
+  color: #8a817b;
+  font-size: 14px;
+}
+
+.refresh-report-btn {
+  border: 1px solid #ddd3cb;
+  background: #ffffff;
+  color: #5a4034;
+  padding: 11px 17px;
+  border-radius: 9px;
+  font-size: 13px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  box-shadow: 0 3px 12px rgba(45, 41, 38, 0.05);
+}
+
+.refresh-report-btn:hover {
+  background: #3b2720;
+  color: #ffffff;
+  border-color: #3b2720;
+}
+
+
+/* ================================
+   STAT CARDS
+================================ */
+
+.reports-stats-grid {
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  gap: 16px;
+  margin-bottom: 22px;
+}
+
+.report-stat-card {
+  min-height: 112px;
+  padding: 20px;
+  box-sizing: border-box;
+  display: flex;
+  align-items: center;
+  gap: 15px;
+  background: #ffffff;
+  border: 1px solid #e7e0da;
+  border-radius: 14px;
+  box-shadow: 0 5px 18px rgba(45, 41, 38, 0.05);
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.report-stat-card:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 24px rgba(45, 41, 38, 0.08);
+}
+
+.report-stat-icon {
+  width: 48px;
+  height: 48px;
+  min-width: 48px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 12px;
+  background: #f3eee9;
+  font-size: 21px;
+}
+
+.report-stat-card span {
+  display: block;
+  margin-bottom: 7px;
+  color: #8b8179;
+  font-size: 12px;
+  font-weight: 600;
+}
+
+.report-stat-card h2 {
+  margin: 0;
+  color: #35251f;
+  font-size: 24px;
+  font-weight: 700;
+}
+
+
+/* ================================
+   TWO COLUMN SECTION
+================================ */
+
+.reports-two-column {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 20px;
+  margin-bottom: 20px;
+}
+
+
+/* ================================
+   COMMON SECTION CARD
+================================ */
+
+.report-section-card {
+  background: #ffffff;
+  border: 1px solid #e7e0da;
+  border-radius: 15px;
+  box-shadow: 0 5px 20px rgba(45, 41, 38, 0.05);
+  overflow: hidden;
+}
+
+.report-section-header {
+  min-height: 78px;
+  padding: 20px 22px;
+  box-sizing: border-box;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 15px;
+  border-bottom: 1px solid #eee8e3;
+}
+
+.report-section-header h2 {
+  margin: 0;
+  color: #3b2720;
+  font-size: 18px;
+  font-weight: 700;
+}
+
+.report-section-header span {
+  margin-top: 5px;
+  display: block;
+  color: #968c85;
+  font-size: 12px;
+}
+
+
+/* ================================
+   PAYMENT METHODS
+================================ */
+
+.payment-report-list {
+  padding: 5px 22px 10px;
+}
+
+.payment-report-item {
+  min-height: 72px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 15px;
+  border-bottom: 1px solid #f0ebe7;
+}
+
+.payment-report-item:last-child {
+  border-bottom: none;
+}
+
+.payment-report-left {
+  display: flex;
+  align-items: center;
+  gap: 13px;
+}
+
+.payment-icon {
+  width: 40px;
+  height: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 10px;
+  background: #f5f1ed;
+  font-size: 18px;
+}
+
+.payment-report-left h3 {
+  margin: 0;
+  color: #3e332d;
+  font-size: 13px;
+  font-weight: 700;
+}
+
+.payment-report-left p {
+  margin: 4px 0 0;
+  color: #9a918b;
+  font-size: 11px;
+}
+
+.payment-report-item > strong {
+  min-width: 34px;
+  text-align: center;
+  color: #3b2720;
+  font-size: 15px;
+}
+
+
+/* ================================
+   ORDER STATUS
+================================ */
+
+.order-status-list {
+  padding: 5px 22px 10px;
+}
+
+.order-status-item {
+  min-height: 58px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  border-bottom: 1px solid #f0ebe7;
+}
+
+.order-status-item:last-child {
+  border-bottom: none;
+}
+
+.status-left {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.status-dot {
+  width: 9px;
+  height: 9px;
+  display: inline-block;
+  border-radius: 50%;
+  background: #aaa;
+}
+
+.status-pending {
+  background: #d89b35;
+}
+
+.status-confirmed {
+  background: #6489c7;
+}
+
+.status-preparing {
+  background: #c77b42;
+}
+
+.status-ready {
+  background: #4f9a72;
+}
+
+.status-served {
+  background: #43805f;
+}
+
+.status-cancelled {
+  background: #bd5d5d;
+}
+
+.status-name {
+  color: #5d554f;
+  font-size: 13px;
+  font-weight: 600;
+}
+
+.order-status-item > strong {
+  color: #3b2720;
+  font-size: 14px;
+}
+
+
+/* ================================
+   SALES REPORT
+================================ */
+
+.sales-report-card {
+  margin-bottom: 20px;
+}
+
+.sales-table-wrapper {
+  width: 100%;
+  overflow-x: auto;
+}
+
+.sales-report-table {
+  width: 100%;
+  min-width: 650px;
+  border-collapse: collapse;
+}
+
+.sales-report-table thead {
+  background: #f6f2ee;
+}
+
+.sales-report-table th {
+  padding: 14px 20px;
+  text-align: left;
+  color: #756b64;
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.5px;
+  text-transform: uppercase;
+  border-bottom: 1px solid #e8e1db;
+  white-space: nowrap;
+}
+
+.sales-report-table td {
+  padding: 16px 20px;
+  color: #625a54;
+  font-size: 13px;
+  border-bottom: 1px solid #eee9e4;
+  vertical-align: middle;
+}
+
+.sales-report-table tbody tr {
+  transition: background 0.2s ease;
+}
+
+.sales-report-table tbody tr:hover {
+  background: #faf8f6;
+}
+
+.sales-report-table tbody tr:last-child td {
+  border-bottom: none;
+}
+
+
+/* ================================
+   SALES NUMBER
+================================ */
+
+.sales-number {
+  width: 28px;
+  height: 28px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 7px;
+  background: #f3eee9;
+  color: #684b3d;
+  font-size: 11px;
+  font-weight: 700;
+}
+
+
+/* ================================
+   SALES ITEM
+================================ */
+
+.sales-item-name {
+  color: #3d302a;
+  font-size: 13px;
+  font-weight: 600;
+}
+
+
+/* ================================
+   QUANTITY
+================================ */
+
+.quantity-badge {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 32px;
+  padding: 6px 9px;
+  box-sizing: border-box;
+  border-radius: 7px;
+  background: #f1f5f9;
+  color: #475569;
+  font-size: 12px;
+  font-weight: 700;
+}
+
+
+/* ================================
+   SALES AMOUNT
+================================ */
+
+.sales-amount {
+  color: #287a4d;
+  font-size: 14px;
+  font-weight: 700;
+  white-space: nowrap;
+}
+
+
+/* ================================
+   EMPTY STATE
+================================ */
+
+.report-empty {
+  padding: 45px 20px;
+  text-align: center;
+  color: #958b84;
+  font-size: 13px;
+}
+
+.sales-empty {
+  padding: 70px 20px;
+}
+
+.sales-empty > div {
+  margin-bottom: 12px;
+  font-size: 45px;
+}
+
+.sales-empty h3 {
+  margin: 0 0 7px;
+  color: #3b2720;
+  font-size: 18px;
+}
+
+.sales-empty p {
+  margin: 0;
+  color: #958b84;
+  font-size: 13px;
+}
+
+
+/* ================================
+   LOADING
+================================ */
+
+.reports-loading {
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: #f7f5f2;
+}
+
+.reports-loading h2 {
+  margin: 0;
+  color: #3b2720;
+  font-size: 22px;
+}
+
+
+/* ================================
+   RESPONSIVE - 1200px
+================================ */
+
+@media (max-width: 1200px) {
+
+  .reports-stats-grid {
+    grid-template-columns: repeat(3, 1fr);
+  }
+
+}
+
+
+/* ================================
+   RESPONSIVE - 900px
+================================ */
+
+@media (max-width: 900px) {
+
+  .admin-reports-page {
+    padding: 25px 20px;
+  }
+
+  .reports-header h1 {
+    font-size: 27px;
+  }
+
+  .reports-two-column {
+    grid-template-columns: 1fr;
+  }
+
+  .reports-stats-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+}
+
+
+/* ================================
+   RESPONSIVE - 600px
+================================ */
+
+@media (max-width: 600px) {
+
+  .admin-reports-page {
+    padding: 20px 15px;
+  }
+
+  .reports-header {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .reports-header h1 {
+    font-size: 24px;
+  }
+
+  .reports-header p {
+    font-size: 13px;
+  }
+
+  .refresh-report-btn {
+    width: 100%;
+  }
+
+  .reports-stats-grid {
+    grid-template-columns: 1fr;
+    gap: 12px;
+  }
+
+  .report-stat-card {
+    min-height: 96px;
+  }
+
+  .report-stat-card h2 {
+    font-size: 22px;
+  }
+
+  .report-section-header {
+    padding: 18px;
+  }
+
+  .payment-report-list,
+  .order-status-list {
+    padding-left: 18px;
+    padding-right: 18px;
+  }
+
+  .sales-report-table th,
+  .sales-report-table td {
+    padding: 13px 15px;
+  }
+
+}
