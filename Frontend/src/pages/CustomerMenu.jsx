@@ -13,6 +13,15 @@ function CustomerMenu() {
     return savedCart ? JSON.parse(savedCart) : [];
   });
 
+  // =========================
+  // BACKEND URL
+  // =========================
+  const API_URL = import.meta.env.VITE_API_URL;
+  const BACKEND_URL = API_URL.replace("/api/auth", "");
+
+  // =========================
+  // CATEGORY IMAGES
+  // =========================
   const categoryImages = {
     pizza:
       "https://images.unsplash.com/photo-1574071318508-1cdbab80d002?auto=format&fit=crop&w=800&q=80",
@@ -22,6 +31,9 @@ function CustomerMenu() {
 
     tea:
       "https://images.unsplash.com/photo-1544787219-7f47ccb76574?auto=format&fit=crop&w=800&q=80",
+
+    coffee:
+      "https://images.unsplash.com/photo-1495474472287-4d71bcdd2085?auto=format&fit=crop&w=800&q=80",
 
     coffe:
       "https://images.unsplash.com/photo-1495474472287-4d71bcdd2085?auto=format&fit=crop&w=800&q=80",
@@ -33,10 +45,13 @@ function CustomerMenu() {
       "https://images.unsplash.com/photo-1547592180-85f173990554?auto=format&fit=crop&w=800&q=80",
   };
 
+  // =========================
+  // GET MENU
+  // =========================
   async function getMenu() {
     try {
       const response = await fetch(
-        "http://localhost:2000/api/auth/getmenu?isAvailable=true"
+        `${API_URL}/getmenu?isAvailable=true`
       );
 
       const data = await response.json();
@@ -45,14 +60,17 @@ function CustomerMenu() {
         throw new Error(data.message || "Menu fetch failed");
       }
 
-      setMenu(data.data);
+      setMenu(data.data || []);
     } catch (error) {
-      console.log(error.message);
+      console.error("MENU FETCH ERROR:", error);
     } finally {
       setLoading(false);
     }
   }
 
+  // =========================
+  // ADD TO CART
+  // =========================
   function addToCart(item) {
     setCart((prevCart) => {
       const existingItem = prevCart.find(
@@ -74,14 +92,23 @@ function CustomerMenu() {
     });
   }
 
+  // =========================
+  // LOAD MENU
+  // =========================
   useEffect(() => {
     getMenu();
   }, []);
 
+  // =========================
+  // SAVE CART
+  // =========================
   useEffect(() => {
     localStorage.setItem("cart", JSON.stringify(cart));
   }, [cart]);
 
+  // =========================
+  // CATEGORIES
+  // =========================
   const categories = [
     "all",
     "pizza",
@@ -95,8 +122,13 @@ function CustomerMenu() {
   const filteredMenu =
     selectedCategory === "all"
       ? menu
-      : menu.filter((item) => item.category === selectedCategory);
+      : menu.filter(
+          (item) => item.category === selectedCategory
+        );
 
+  // =========================
+  // LOADING
+  // =========================
   if (loading) {
     return (
       <div className="menu-loading">
@@ -108,8 +140,10 @@ function CustomerMenu() {
 
   return (
     <div className="customer-menu-page">
-      {/* Navbar */}
+
+      {/* ================= NAVBAR ================= */}
       <nav className="menu-navbar">
+
         <div className="brand">
           <span className="brand-icon">☕</span>
 
@@ -123,43 +157,61 @@ function CustomerMenu() {
         </div>
 
         <div className="nav-links">
-          <a href="/customer-dashboard">Home</a>
 
-          <a className="active" href="/customer-menu">
+          <a href="/customer-dashboard">
+            Home
+          </a>
+
+          <a
+            className="active"
+            href="/customer-menu"
+          >
             Menu
           </a>
 
-          <a href="/my-orders">Orders</a>
+          <a href="/my-orders">
+            Orders
+          </a>
 
-          <a href="/customer-profile">Profile</a>
+          <a href="/customer-profile">
+            Profile
+          </a>
 
           <button
             className="cart-button"
             onClick={() => navigate("/cart")}
           >
             🛒 Cart{" "}
+
             <span>
               {cart.reduce(
-                (total, item) => total + item.quantity,
+                (total, item) =>
+                  total + item.quantity,
                 0
               )}
             </span>
           </button>
+
         </div>
       </nav>
 
-      {/* Hero */}
+      {/* ================= HERO ================= */}
       <section className="menu-hero">
+
         <div className="hero-content">
-          <p className="hero-small">FRESH & DELICIOUS</p>
+
+          <p className="hero-small">
+            FRESH & DELICIOUS
+          </p>
 
           <h1>
             Our <span>Menu</span>
           </h1>
 
           <p>
-            Good food, good mood! Explore our freshly made dishes
-            and beverages, crafted with love.
+            Good food, good mood! Explore our
+            freshly made dishes and beverages,
+            crafted with love.
           </p>
 
           <button
@@ -174,9 +226,11 @@ function CustomerMenu() {
           >
             Explore Menu ↓
           </button>
+
         </div>
 
         <div className="hero-image">
+
           <img
             src="https://images.unsplash.com/photo-1501339847302-ac426a4a7cbb?auto=format&fit=crop&w=1000&q=80"
             alt="Cafe"
@@ -185,29 +239,42 @@ function CustomerMenu() {
           <div className="hero-badge">
             ☕ Freshly Made
           </div>
+
         </div>
+
       </section>
 
-      {/* Menu */}
+      {/* ================= MENU ================= */}
       <section
         className="menu-section"
         id="menu-section"
       >
-        <div className="section-heading">
-          <div>
-            <p>WHAT'S ON THE TABLE</p>
 
-            <h2>Choose Your Favourite</h2>
+        <div className="section-heading">
+
+          <div>
+
+            <p>
+              WHAT'S ON THE TABLE
+            </p>
+
+            <h2>
+              Choose Your Favourite
+            </h2>
+
           </div>
 
           <span>
             {filteredMenu.length} items
           </span>
+
         </div>
 
-        {/* Categories */}
+        {/* ================= CATEGORIES ================= */}
         <div className="category-list">
+
           {categories.map((category) => (
+
             <button
               key={category}
               className={
@@ -219,6 +286,7 @@ function CustomerMenu() {
                 setSelectedCategory(category)
               }
             >
+
               {category === "all" && "🍽️"}
 
               {category === "pizza" && "🍕"}
@@ -239,32 +307,49 @@ function CustomerMenu() {
                   : category.charAt(0).toUpperCase() +
                     category.slice(1)}
               </span>
+
             </button>
+
           ))}
+
         </div>
 
-        {/* Cards */}
+        {/* ================= MENU CARDS ================= */}
+
         {filteredMenu.length === 0 ? (
+
           <div className="empty-menu">
+
             <div>🍽️</div>
 
-            <h3>No items available</h3>
+            <h3>
+              No items available
+            </h3>
 
-            <p>Please try another category.</p>
+            <p>
+              Please try another category.
+            </p>
+
           </div>
+
         ) : (
+
           <div className="menu-grid">
+
             {filteredMenu.map((item) => (
+
               <div
                 className="food-card"
                 key={item._id}
               >
-                {/* Food Image */}
+
+                {/* FOOD IMAGE */}
                 <div className="food-image">
+
                   <img
                     src={
                       item.imageurl
-                        ? `http://localhost:2000${item.imageurl}`
+                        ? `${BACKEND_URL}${item.imageurl}`
                         : categoryImages[item.category] ||
                           categoryImages.others
                     }
@@ -277,17 +362,27 @@ function CustomerMenu() {
                       : item.category}
                   </div>
 
-                  <button className="favorite-button">
+                  <button
+                    className="favorite-button"
+                  >
                     ♡
                   </button>
+
                 </div>
 
-                {/* Food Content */}
+                {/* FOOD CONTENT */}
                 <div className="food-content">
-                  <div className="food-title">
-                    <h3>{item.name}</h3>
 
-                    <span>★ 4.8</span>
+                  <div className="food-title">
+
+                    <h3>
+                      {item.name}
+                    </h3>
+
+                    <span>
+                      ★ 4.8
+                    </span>
+
                   </div>
 
                   <p className="food-description">
@@ -295,6 +390,7 @@ function CustomerMenu() {
                   </p>
 
                   <div className="food-bottom">
+
                     <div className="price">
                       ₹{item.price}
                     </div>
@@ -307,30 +403,47 @@ function CustomerMenu() {
                     >
                       🛒 Add to Cart
                     </button>
+
                   </div>
+
                 </div>
+
               </div>
+
             ))}
+
           </div>
+
         )}
+
       </section>
 
-      {/* Footer */}
+      {/* ================= FOOTER ================= */}
       <footer className="menu-footer">
+
         <div>
-          <h2>☕ Smart Cafe</h2>
+
+          <h2>
+            ☕ Smart Cafe
+          </h2>
 
           <p>
-            Fresh food. Great taste. Smart experience.
+            Fresh food. Great taste.
+            Smart experience.
           </p>
+
         </div>
 
         <p>
-          © 2026 Smart Cafe. All rights reserved.
+          © 2026 Smart Cafe.
+          All rights reserved.
         </p>
+
       </footer>
+
     </div>
   );
 }
 
 export default CustomerMenu;
+
