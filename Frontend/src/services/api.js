@@ -1,5 +1,9 @@
 const API_URL = import.meta.env.VITE_API_URL;
 
+// =========================
+// ADMIN LOGIN
+// =========================
+
 export async function loginUser(email, password) {
   const response = await fetch(`${API_URL}/login`, {
     method: "POST",
@@ -21,6 +25,37 @@ export async function loginUser(email, password) {
   return data;
 }
 
+// =========================
+// CUSTOMER LOGIN
+// =========================
+
+export async function loginCustomer(email, password) {
+  const response = await fetch(`${API_URL}/customerlogin`, {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify({
+      email,
+      password,
+    }),
+  });
+
+  const data = await response.json();
+
+  console.log("CUSTOMER LOGIN RESPONSE:", data);
+
+  if (!response.ok) {
+    throw new Error(data.message || "Customer login failed");
+  }
+
+  return data;
+}
+
+// =========================
+// ADMIN DASHBOARD
+// =========================
+
 export async function getDashboard() {
   const token = localStorage.getItem("token");
 
@@ -34,11 +69,17 @@ export async function getDashboard() {
   const data = await response.json();
 
   if (!response.ok) {
-    throw new Error(data.message || "Dashboard data fetch failed");
+    throw new Error(
+      data.message || "Dashboard data fetch failed"
+    );
   }
 
   return data;
 }
+
+// =========================
+// CUSTOMER AI
+// =========================
 
 export async function customerAI(question) {
   const token = localStorage.getItem("customerToken");
@@ -66,6 +107,10 @@ export async function customerAI(question) {
   return data;
 }
 
+// =========================
+// CUSTOMER ORDERS
+// =========================
+
 export async function getMyOrders() {
   const token = localStorage.getItem("customerToken");
 
@@ -84,6 +129,10 @@ export async function getMyOrders() {
 
   return data;
 }
+
+// =========================
+// ADMIN ORDERS
+// =========================
 
 export async function getAllOrders() {
   const token = localStorage.getItem("token");
@@ -120,11 +169,17 @@ export async function updateOrderStatus(orderId) {
   const data = await response.json();
 
   if (!response.ok) {
-    throw new Error(data.message || "Order status update failed");
+    throw new Error(
+      data.message || "Order status update failed"
+    );
   }
 
   return data;
 }
+
+// =========================
+// MENU
+// =========================
 
 export async function getAllMenu() {
   const response = await fetch(`${API_URL}/getmenu`);
@@ -173,14 +228,17 @@ export async function createMenu(menuData) {
 export async function updateMenu(menuId, menuData) {
   const token = localStorage.getItem("token");
 
-  const response = await fetch(`${API_URL}/updatemenu/${menuId}`, {
-    method: "PUT",
-    headers: {
-      "Content-Type": "application/json",
-      Authorization: `Bearer ${token}`,
-    },
-    body: JSON.stringify(menuData),
-  });
+  const response = await fetch(
+    `${API_URL}/updatemenu/${menuId}`,
+    {
+      method: "PUT",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${token}`,
+      },
+      body: JSON.stringify(menuData),
+    }
+  );
 
   const data = await response.json();
 
@@ -194,12 +252,15 @@ export async function updateMenu(menuId, menuData) {
 export async function deleteMenu(menuId) {
   const token = localStorage.getItem("token");
 
-  const response = await fetch(`${API_URL}/deletemenu/${menuId}`, {
-    method: "DELETE",
-    headers: {
-      Authorization: `Bearer ${token}`,
-    },
-  });
+  const response = await fetch(
+    `${API_URL}/deletemenu/${menuId}`,
+    {
+      method: "DELETE",
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    }
+  );
 
   const data = await response.json();
 
@@ -210,7 +271,9 @@ export async function deleteMenu(menuId) {
   return data;
 }
 
+// =========================
 // TABLES
+// =========================
 
 export async function getAllTables() {
   const token = localStorage.getItem("token");
@@ -298,7 +361,9 @@ export async function deleteTable(tableId) {
   return data;
 }
 
+// =========================
 // PAYMENTS
+// =========================
 
 export async function getAllPayments() {
   const token = localStorage.getItem("token");
@@ -335,13 +400,17 @@ export async function approvePayment(paymentId) {
   const data = await response.json();
 
   if (!response.ok) {
-    throw new Error(data.message || "Payment approval failed");
+    throw new Error(
+      data.message || "Payment approval failed"
+    );
   }
 
   return data;
 }
 
+// =========================
 // CUSTOMERS
+// =========================
 
 export async function getAllCustomers() {
   const token = localStorage.getItem("token");
@@ -385,3 +454,4 @@ export async function createCustomer(customerData) {
 
   return data;
 }
+

@@ -1,5 +1,6 @@
 import { useNavigate } from "react-router-dom";
 import { useState } from "react";
+import { loginCustomer } from "../services/api";
 
 function CustomerLogin() {
   const navigate = useNavigate();
@@ -11,37 +12,28 @@ function CustomerLogin() {
     event.preventDefault();
 
     try {
-      const response = await fetch(
-        "http://localhost:2000/api/auth/customerlogin",
-        {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify({
-            email,
-            password,
-          }),
-        }
-      );
+      const data = await loginCustomer(email, password);
 
-      const data = await response.json();
+      console.log("CUSTOMER LOGIN RESPONSE:", data);
 
-      if (!response.ok) {
-        throw new Error(data.message || "Customer login failed");
+      if (!data || !data.token) {
+        throw new Error("Customer login response is missing token");
       }
 
       localStorage.setItem("customerToken", data.token);
-      localStorage.setItem(
-        "customer",
-        JSON.stringify(data.customer)
-      );
+
+      if (data.customer) {
+        localStorage.setItem(
+          "customer",
+          JSON.stringify(data.customer)
+        );
+      }
 
       alert("Customer login successful");
 
       navigate("/customer-dashboard");
-
     } catch (error) {
+      console.error("CUSTOMER LOGIN ERROR:", error);
       alert(error.message);
     }
   }
@@ -63,7 +55,6 @@ function CustomerLogin() {
         </div>
 
         <div className="login-card">
-
           <h2>Welcome!</h2>
 
           <p className="login-subtitle">
@@ -79,9 +70,7 @@ function CustomerLogin() {
                 type="email"
                 placeholder="Enter your email"
                 value={email}
-                onChange={(event) =>
-                  setEmail(event.target.value)
-                }
+                onChange={(event) => setEmail(event.target.value)}
                 required
               />
             </div>
@@ -93,9 +82,7 @@ function CustomerLogin() {
                 type="password"
                 placeholder="Enter your password"
                 value={password}
-                onChange={(event) =>
-                  setPassword(event.target.value)
-                }
+                onChange={(event) => setPassword(event.target.value)}
                 required
               />
             </div>
@@ -108,7 +95,6 @@ function CustomerLogin() {
             </button>
 
           </form>
-
         </div>
 
       </div>
@@ -117,3 +103,4 @@ function CustomerLogin() {
 }
 
 export default CustomerLogin;
+

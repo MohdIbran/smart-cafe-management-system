@@ -54,7 +54,7 @@ function CafeHome() {
 
           <button
             className="admin-login-btn"
-            onClick={() => navigate("/")}
+            onClick={() => navigate("/login")}
           >
             Admin Login
           </button>
@@ -400,7 +400,7 @@ function CafeHome() {
 
         <button
           className="footer-admin-btn"
-          onClick={() => navigate("/")}
+          onClick={() => navigate("/login")}
         >
           Admin Login
         </button>
