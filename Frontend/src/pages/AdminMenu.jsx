@@ -6,7 +6,8 @@ import {
   createMenu,
 } from "../services/api";
 
-
+const API_URL = import.meta.env.VITE_API_URL;
+const BACKEND_URL = API_URL.replace("/api/auth", "");
 
 function AdminMenu() {
   const [menu, setMenu] = useState([]);
@@ -369,7 +370,7 @@ function AdminMenu() {
                     src={
                       item.imageurl.startsWith("http")
                         ? item.imageurl
-                        : `http://localhost:2000${item.imageurl}`
+                        : `${BACKEND_URL}${item.imageurl}`
                     }
                     alt={item.name}
                   />
@@ -474,4 +475,3 @@ function AdminMenu() {
 }
 
 export default AdminMenu;
-

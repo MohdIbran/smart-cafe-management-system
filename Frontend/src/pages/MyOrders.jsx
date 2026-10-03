@@ -9,6 +9,10 @@ function MyOrders() {
 
   const customer = JSON.parse(localStorage.getItem("customer")) || {};
 
+  // API and backend base URLs
+  const API_URL = import.meta.env.VITE_API_URL;
+  const BACKEND_URL = API_URL.replace("/api/auth", "");
+
   useEffect(() => {
     fetchOrders();
   }, []);
@@ -18,7 +22,7 @@ function MyOrders() {
       const data = await getMyOrders();
       setOrders(data.orders || []);
     } catch (error) {
-      console.log(error);
+      console.log("Orders error:", error);
     } finally {
       setLoading(false);
     }
@@ -83,6 +87,7 @@ function MyOrders() {
         return "🍕";
 
       case "coffee":
+      case "coffe":
         return "☕";
 
       case "tea":
@@ -136,7 +141,9 @@ function MyOrders() {
   ];
 
   const getStatusIndex = (status) => {
-    return statusSteps.findIndex((step) => step.status === status);
+    return statusSteps.findIndex(
+      (step) => step.status === status
+    );
   };
 
   if (loading) {
@@ -159,7 +166,9 @@ function MyOrders() {
 
           <div>
             <h2>Smart Cafe</h2>
-            <span>Good Food&nbsp; • &nbsp;Better Mood</span>
+            <span>
+              Good Food&nbsp; • &nbsp;Better Mood
+            </span>
           </div>
         </div>
 
@@ -188,7 +197,11 @@ function MyOrders() {
             My Orders
           </button>
 
-          <button>
+          <button
+            onClick={() =>
+              (window.location.href = "/customer-profile")
+            }
+          >
             <span>♙</span>
             Profile
           </button>
@@ -250,7 +263,9 @@ function MyOrders() {
             </div>
 
             <div>
-              <strong>{customer?.name || "Customer"}</strong>
+              <strong>
+                {customer?.name || "Customer"}
+              </strong>
               <small>Customer</small>
             </div>
 
@@ -292,9 +307,8 @@ function MyOrders() {
               const firstItem = order.items?.[0];
               const menuItem = firstItem?.menuItem;
 
-              const currentStatusIndex = getStatusIndex(
-                order.orderStatus
-              );
+              const currentStatusIndex =
+                getStatusIndex(order.orderStatus);
 
               const isCancelled =
                 order.orderStatus === "cancelled";
@@ -312,14 +326,15 @@ function MyOrders() {
                   <div className="order-food-image">
 
                     {menuItem?.imageurl ? (
-<img
-  src={
-    menuItem.imageurl.startsWith("http")
-      ? menuItem.imageurl
-      : `http://localhost:2000${menuItem.imageurl}`
-  }
-  alt={menuItem.name}
-/>
+
+                      <img
+                        src={
+                          menuItem.imageurl.startsWith("http")
+                            ? menuItem.imageurl
+                            : `${BACKEND_URL}${menuItem.imageurl}`
+                        }
+                        alt={menuItem.name}
+                      />
 
                     ) : (
 
@@ -372,16 +387,21 @@ function MyOrders() {
                     {isCancelled ? (
 
                       <div className="cancelled-order-status">
+
                         <div className="cancelled-icon">
                           ✕
                         </div>
 
                         <div>
-                          <strong>Order Cancelled</strong>
+                          <strong>
+                            Order Cancelled
+                          </strong>
+
                           <p>
                             This order has been cancelled.
                           </p>
                         </div>
+
                       </div>
 
                     ) : (
@@ -397,6 +417,7 @@ function MyOrders() {
                             index === currentStatusIndex;
 
                           return (
+
                             <div
                               className="progress-wrapper"
                               key={step.status}
@@ -404,9 +425,13 @@ function MyOrders() {
 
                               <div
                                 className={`progress-step ${
-                                  isActive ? "active" : ""
+                                  isActive
+                                    ? "active"
+                                    : ""
                                 } ${
-                                  isCurrent ? "current" : ""
+                                  isCurrent
+                                    ? "current"
+                                    : ""
                                 }`}
                               >
 
@@ -489,30 +514,32 @@ function MyOrders() {
 
                     {/* Item */}
                     <div className="order-item">
+
                       <div className="small-food-image">
 
-  {menuItem?.imageurl ? (
+                        {menuItem?.imageurl ? (
 
-    <img
-      src={
-        menuItem.imageurl.startsWith("http")
-          ? menuItem.imageurl
-          : `http://localhost:2000${menuItem.imageurl}`
-      }
-      alt={menuItem.name}
-    />
+                          <img
+                            src={
+                              menuItem.imageurl.startsWith("http")
+                                ? menuItem.imageurl
+                                : `${BACKEND_URL}${menuItem.imageurl}`
+                            }
+                            alt={menuItem.name}
+                          />
 
-  ) : (
+                        ) : (
 
-    <div className="food-emoji">
-      {getFoodEmoji(menuItem?.category)}
-    </div>
+                          <div className="food-emoji">
+                            {getFoodEmoji(
+                              menuItem?.category
+                            )}
+                          </div>
 
-  )}
+                        )}
 
-</div>
+                      </div>
 
-                    
                       <div className="item-name">
                         {menuItem?.name || "Food Item"}
                       </div>
@@ -541,7 +568,8 @@ function MyOrders() {
                       <span>Total Amount</span>
 
                       <strong>
-                        ₹ {order.billing?.totalAmount || 0}
+                        ₹{" "}
+                        {order.billing?.totalAmount || 0}
                       </strong>
 
                     </div>
@@ -582,11 +610,7 @@ function MyOrders() {
 
       </main>
 
-
-      {/* =========================
-          ORDER DETAILS MODAL
-         ========================= */}
-
+      {/* ORDER DETAILS MODAL */}
       {selectedOrder && (
 
         <div className="order-modal-overlay">
@@ -617,7 +641,6 @@ function MyOrders() {
 
             </div>
 
-
             {/* Modal Body */}
             <div className="order-modal-body">
 
@@ -634,7 +657,6 @@ function MyOrders() {
 
               </div>
 
-
               {/* Order Information */}
               <div className="modal-info-grid">
 
@@ -649,7 +671,6 @@ function MyOrders() {
 
                 </div>
 
-
                 <div className="modal-info-box">
 
                   <small>Payment</small>
@@ -660,7 +681,6 @@ function MyOrders() {
                   </strong>
 
                 </div>
-
 
                 <div className="modal-info-box">
 
@@ -678,12 +698,10 @@ function MyOrders() {
 
               </div>
 
-
               {/* Ordered Items */}
               <h3 className="modal-items-title">
                 Ordered Items
               </h3>
-
 
               <div className="modal-items">
 
@@ -717,7 +735,6 @@ function MyOrders() {
 
               </div>
 
-
               {/* Billing */}
               <div className="modal-billing">
 
@@ -734,7 +751,6 @@ function MyOrders() {
 
                 </div>
 
-
                 <div className="billing-row">
 
                   <span>Discount</span>
@@ -748,7 +764,6 @@ function MyOrders() {
 
                 </div>
 
-
                 <div className="billing-row">
 
                   <span>Tax</span>
@@ -761,7 +776,6 @@ function MyOrders() {
                   </span>
 
                 </div>
-
 
                 <div className="billing-row total-row">
 
@@ -779,7 +793,6 @@ function MyOrders() {
               </div>
 
             </div>
-
 
             {/* Modal Footer */}
             <div className="order-modal-footer">
@@ -806,3 +819,4 @@ function MyOrders() {
 }
 
 export default MyOrders;
+

@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 
 function Cart() {
@@ -13,6 +13,9 @@ function Cart() {
   const [selectedTable, setSelectedTable] = useState("");
   const [showTables, setShowTables] = useState(false);
   const [placingOrder, setPlacingOrder] = useState(false);
+
+  const API_URL = import.meta.env.VITE_API_URL;
+  const BACKEND_URL = API_URL.replace("/api/auth", "");
 
   function updateQuantity(id, change) {
     setCart((prevCart) => {
@@ -47,7 +50,7 @@ function Cart() {
       const token = localStorage.getItem("customerToken");
 
       const response = await fetch(
-        "http://localhost:2000/api/auth/customer/gettable",
+        `${API_URL}/customer/gettable`,
         {
           method: "GET",
           headers: {
@@ -99,7 +102,7 @@ function Cart() {
       }));
 
       const response = await fetch(
-        `http://localhost:2000/api/auth/createorder/${selectedTable}`,
+        `${API_URL}/createorder/${selectedTable}`,
         {
           method: "POST",
           headers: {
@@ -122,17 +125,17 @@ function Cart() {
 
       alert("Order placed successfully! 🎉");
 
-     localStorage.removeItem("cart");
-setCart([]);
+      localStorage.removeItem("cart");
+      setCart([]);
 
-setSelectedTable("");
-setShowTables(false);
+      setSelectedTable("");
+      setShowTables(false);
 
-navigate("/payment", {
-  state: {
-    orderId: data.order._id
-  }
-});
+      navigate("/payment", {
+        state: {
+          orderId: data.order._id,
+        },
+      });
     } catch (error) {
       console.log(error);
       alert(error.message);
@@ -239,13 +242,13 @@ navigate("/payment", {
                   <div className="cart-item-image">
 
                     <img
-  src={
-    item.imageurl
-      ? `http://localhost:2000${item.imageurl}`
-      : "/default-food.jpg"
-  }
-  alt={item.name}
-/>
+                      src={
+                        item.imageurl
+                          ? `${BACKEND_URL}${item.imageurl}`
+                          : "/default-food.jpg"
+                      }
+                      alt={item.name}
+                    />
 
                   </div>
 

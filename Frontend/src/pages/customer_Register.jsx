@@ -10,12 +10,14 @@ function CustomerRegister() {
   const [phone, setPhone] = useState("");
   const [address, setAddress] = useState("");
 
+  const API_URL = import.meta.env.VITE_API_URL;
+
   async function handleRegister(event) {
     event.preventDefault();
 
     try {
       const response = await fetch(
-        "http://localhost:2000/api/auth/createcustomer",
+        `${API_URL}/createcustomer`,
         {
           method: "POST",
           headers: {

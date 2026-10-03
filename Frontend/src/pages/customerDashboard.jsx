@@ -3,7 +3,6 @@ import { useNavigate } from "react-router-dom";
 import { customerAI } from "../services/api";
 import "../customerDashboard.css";
 
-
 function CustomerDashboard() {
   const navigate = useNavigate();
   const [question, setQuestion] = useState("");
@@ -17,6 +16,10 @@ function CustomerDashboard() {
     return savedCustomer ? JSON.parse(savedCustomer) : null;
   });
 
+  // API URL
+  const API_URL = import.meta.env.VITE_API_URL;
+  const BACKEND_URL = API_URL.replace("/api/auth", "");
+
   // ================================
   // GET CUSTOMER ORDERS
   // ================================
@@ -26,8 +29,13 @@ function CustomerDashboard() {
       try {
         const token = localStorage.getItem("customerToken");
 
+        if (!token) {
+          navigate("/customer-login");
+          return;
+        }
+
         const response = await fetch(
-          "http://localhost:2000/api/auth/getMyOrders",
+          `${API_URL}/getMyOrders`,
           {
             headers: {
               Authorization: `Bearer ${token}`,
@@ -46,7 +54,7 @@ function CustomerDashboard() {
     };
 
     getOrders();
-  }, []);
+  }, [API_URL, navigate]);
 
   // ================================
   // TOTAL ORDERS
@@ -160,10 +168,7 @@ function CustomerDashboard() {
   return (
     <div className="smart-cafe-dashboard">
 
-      {/* =================================
-          SIDEBAR
-      ================================= */}
-
+      {/* SIDEBAR */}
       <aside className="cafe-sidebar">
 
         <div className="cafe-logo">
@@ -204,14 +209,12 @@ function CustomerDashboard() {
             <span>My Orders</span>
           </button>
 
-          
-<button
-  onClick={() => navigate("/customer-profile")}
->
-  👤
-  <span>Profile</span>
-</button>
-
+          <button
+            onClick={() => navigate("/customer-profile")}
+          >
+            👤
+            <span>Profile</span>
+          </button>
 
           <button
             onClick={() => {
@@ -242,14 +245,10 @@ function CustomerDashboard() {
       </aside>
 
 
-      {/* =================================
-          MAIN CONTENT
-      ================================= */}
-
+      {/* MAIN CONTENT */}
       <main className="cafe-main">
 
         {/* HEADER */}
-
         <header className="cafe-topbar">
 
           <div className="welcome-area">
@@ -310,16 +309,12 @@ function CustomerDashboard() {
         </header>
 
 
-        {/* =================================
-            DASHBOARD BODY
-        ================================= */}
-
+        {/* DASHBOARD BODY */}
         <div className="dashboard-grid">
 
           <div className="dashboard-left">
 
             {/* STATS */}
-
             <section className="customer-stats">
 
               <div className="stat-card pink-card">
@@ -399,7 +394,6 @@ function CustomerDashboard() {
 
 
             {/* FOOD BANNER */}
-
             <section className="food-banner">
 
               <div className="banner-content">
@@ -434,7 +428,6 @@ function CustomerDashboard() {
 
 
             {/* RECENT ORDERS */}
-
             <section className="recent-orders">
 
               <div className="section-heading">
@@ -466,7 +459,11 @@ function CustomerDashboard() {
 
                   <div className="empty-orders">
                     <div>☕</div>
-                    <h3>No orders yet</h3>
+
+                    <h3>
+                      No orders yet
+                    </h3>
+
                     <p>
                       Place your first delicious order!
                     </p>
@@ -484,20 +481,28 @@ function CustomerDashboard() {
                         key={order._id}
                       >
 
-                       <div className="order-food-image">
-  {firstItem?.menuItem?.imageurl ? (
-    <img
-      src={
-        firstItem.menuItem.imageurl.startsWith("http")
-          ? firstItem.menuItem.imageurl
-          : `http://localhost:2000${firstItem.menuItem.imageurl}`
-      }
-      alt={firstItem.menuItem.name}
-    />
-  ) : (
-    <span>🍔</span>
-  )}
-</div>
+                        <div className="order-food-image">
+
+                          {firstItem?.menuItem?.imageurl ? (
+
+                            <img
+                              src={
+                                firstItem.menuItem.imageurl.startsWith(
+                                  "http"
+                                )
+                                  ? firstItem.menuItem.imageurl
+                                  : `${BACKEND_URL}${firstItem.menuItem.imageurl}`
+                              }
+                              alt={firstItem.menuItem.name}
+                            />
+
+                          ) : (
+
+                            <span>🍔</span>
+
+                          )}
+
+                        </div>
 
 
                         <div className="order-info">
@@ -545,6 +550,7 @@ function CustomerDashboard() {
 
                       </div>
                     );
+
                   })
 
                 )}
@@ -555,7 +561,6 @@ function CustomerDashboard() {
 
 
             {/* AI ASSISTANT */}
-
             <section className="ai-section">
 
               <div className="ai-header">
@@ -567,6 +572,7 @@ function CustomerDashboard() {
                   </div>
 
                   <div>
+
                     <h2>
                       Cafe AI Assistant
                     </h2>
@@ -574,6 +580,7 @@ function CustomerDashboard() {
                     <p>
                       Your personal Smart Cafe helper
                     </p>
+
                   </div>
 
                 </div>
@@ -727,10 +734,7 @@ function CustomerDashboard() {
           </div>
 
 
-          {/* =================================
-              RIGHT SIDEBAR
-          ================================= */}
-
+          {/* RIGHT SIDEBAR */}
           <aside className="dashboard-right">
 
             <section className="quick-section">
@@ -818,7 +822,6 @@ function CustomerDashboard() {
 
 
             {/* HELP */}
-
             <section className="help-card">
 
               <div className="help-icon">
@@ -842,7 +845,6 @@ function CustomerDashboard() {
 
 
             {/* RIGHT FOOTER */}
-
             <div className="right-footer">
 
               <div>
@@ -865,7 +867,6 @@ function CustomerDashboard() {
 
 
         {/* FOOTER */}
-
         <footer className="cafe-footer">
           ☕ Thank you for choosing{" "}
           <strong>Smart Cafe</strong> ❤️

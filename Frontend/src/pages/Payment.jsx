@@ -13,6 +13,9 @@ function Payment() {
   const [order, setOrder] = useState(null);
   const [loadingOrder, setLoadingOrder] = useState(true);
 
+  // API URL from environment
+  const API_URL = import.meta.env.VITE_API_URL;
+
   // Get current order
   useEffect(() => {
     async function getOrder() {
@@ -26,7 +29,7 @@ function Payment() {
         }
 
         const response = await fetch(
-          "http://localhost:2000/api/auth/getMyOrders",
+          `${API_URL}/getMyOrders`,
           {
             method: "GET",
             headers: {
@@ -63,7 +66,7 @@ function Payment() {
     } else {
       setLoadingOrder(false);
     }
-  }, [orderId, navigate]);
+  }, [orderId, navigate, API_URL]);
 
 
   // Payment function
@@ -100,7 +103,7 @@ function Payment() {
       }
 
       const response = await fetch(
-        `http://localhost:2000/api/auth/payment/${orderId}`,
+        `${API_URL}/payment/${orderId}`,
         {
           method: "POST",
           headers: {
